@@ -30,7 +30,7 @@ function displayItems(page, data) {
       <td>${item.name}</td>
       <td>${item.description}</td>
       <td>${item.mainObject}</td>
-<!--      <td><button class="btn btn-primary align-self-center" onclick="fetchGuides(${item.id}, '${item.name}')">-->
+      <td><button class="btn btn-primary align-self-center" onclick="fetchGuides(${item.id}, '${item.name}')">
         Выбрать
       </button></td>
     `;
@@ -69,58 +69,53 @@ function createPagination(totalItems) {
   const paginationList = document.createElement('ul');
   paginationList.classList.add('pagination', 'row');
 
-  paginationList.appendChild(createPageButton('Назад', () => {
+  function addPageButton(label, onClick, isActive = false) {
+    const pageItem = document.createElement('li');
+    pageItem.classList.add('page-item', 'col-2', 'col-md-auto', 'col-sm-auto', 'm-0', 'p-0', 'text-center');
+    if (isActive) {
+      pageItem.classList.add('active');
+    }
+    const pageLink = document.createElement('a');
+    pageLink.classList.add('page-link');
+    pageLink.href = '#routes';
+    pageLink.innerText = label;
+    pageLink.addEventListener('click', onClick);
+    pageItem.appendChild(pageLink);
+    paginationList.appendChild(pageItem);
+  }
+
+  addPageButton('Назад', () => {
     if (currentPage > 1) {
       currentPage--;
       displayItems(currentPage, routesData);
       updatePaginationUI();
     }
-  }));
+  });
 
   for (let i = 1; i <= totalPages; i++) {
-    paginationList.appendChild(createPageButton(i, () => {
+    addPageButton(i, () => {
       currentPage = i;
       displayItems(currentPage, routesData);
       updatePaginationUI();
-    }, i === currentPage));
+    }, i === currentPage);
   }
 
-  paginationList.appendChild(createPageButton('Вперед', () => {
+  addPageButton('Вперед', () => {
     if (currentPage < totalPages) {
       currentPage++;
       displayItems(currentPage, routesData);
       updatePaginationUI();
     }
-  }));
+  });
 
   paginationContainer.appendChild(paginationList);
   routesArticle.appendChild(paginationContainer);
-}
-
-function createPageButton(label, onClick, isActive = false) {
-  const pageItem = document.createElement('li');
-  pageItem.classList.add('page-item', 'page-item', 'col-2', 'col-md-auto', 'col-sm-auto', 'm-0', 'p-0', 'text-center');
-
-  const pageLink = document.createElement('a');
-  pageLink.classList.add('page-link');
-  pageLink.href = '#routes';
-  pageLink.innerText = label;
-
-  if (isActive) {
-    pageItem.classList.add('active');
-  }
-
-  pageLink.addEventListener('click', onClick);
-
-  pageItem.appendChild(pageLink);
-  return pageItem;
 }
 
 function updatePaginationUI() {
   const paginationList = document.querySelector('.pagination');
   const allPageItems = paginationList.querySelectorAll('.page-item');
   allPageItems.forEach(item => item.classList.remove('active'));
-
   const currentPageItem = paginationList.querySelector(`li:nth-child(${currentPage + 1})`);
   currentPageItem.classList.add('active');
 }
