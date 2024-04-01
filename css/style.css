@@ -11,10 +11,18 @@
     src: url('../fonts/Gropled-Bold.otf') format('truetype');
 }
 
-h1, h5 {
+#logo-text {
     font-family: "Gropled", sans-serif;
 }
 
 a {
     text-decoration: none;
+}
+
+.main-img {
+    height: 400px;
+}
+
+td {
+    background: mintcream;
 }

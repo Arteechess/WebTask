@@ -5,10 +5,15 @@ const minWorkExperience = document.getElementById('experience-range-start');
 let minWorkExperienceValue = 0;
 const maxWorkExperience = document.getElementById('experience-range-end');
 let maxWorkExperienceValue = 0;
+
 let guidesData = [];
 let startData = [];
 const langSelect = document.getElementById('lang-select');
 const langSet = new Set();
+
+let currentRoute = null;
+let currentGuide = null;
+let currentPrice = null;
 
 function getYearString(year) {
   if (year % 10 === 1 && year !== 11) {
@@ -20,7 +25,21 @@ function getYearString(year) {
   return 'лет';
 }
 
-
+function setModalData(id, name, language, workExperience, pricePerHour, route) {
+  currentGuide = id;
+  guideModalName.innerText = name;
+  guideOrderPrice = pricePerHour;
+  routeModalName.innerText = routeName.innerText;
+  currentRoute = Number(route);
+  tripDuration.value = workExperience + ' ' + getYearString(workExperience);
+  document.getElementById('total-modal-price').innerText = pricePerHour;
+  currentPrice = pricePerHour;
+  document.getElementById('check-food').checked = false;
+  document.getElementById('check-trip').checked = false;
+  document.getElementById('trip-date').value = '';
+  document.getElementById('trip-time').value = '12:00';
+  document.getElementById('trip-people-count').value = 1;
+}
 
 function displayGuideItems(data, name, routeId) {
   if (routeNotSelected.innerText !== '') {
@@ -126,7 +145,7 @@ function setExperienceTable() {
         <td>${item.language}</td>
         <td>${item.workExperience} ${getYearString(item.workExperience)}</td>
         <td>${item.pricePerHour}/час</td>
-        <td><button class="btn btn-primary align-self-center">Выбрать</button></td>
+        <td><button class="btn btn-primary align-self-center" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setModalData(${item.id}, '${item.name}', '${item.language}', ${item.workExperience}, ${item.pricePerHour}, ${item.route_id})">Выбрать</button></td>
       </tr>
     `;
   });

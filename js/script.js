@@ -27,13 +27,14 @@ function displayItems(page, data) {
   paginatedData.forEach(item => {
     const row = document.createElement('tr')
     row.innerHTML = `
-      <td>${item.name}</td>
-      <td>${item.description}</td>
-      <td>${item.mainObject}</td>
-      <td><button class="btn btn-primary align-self-center" onclick="fetchGuides(${item.id}, '${item.name}')">
+      <td class="p-2 align-top">${item.name}</td>
+      <td class="p-2 align-top">${item.description}</td>
+      <td class="p-2 align-top">${item.mainObject}</td>
+      <td class="pt-2 pe-2 align-top"><button class="btn btn-primary align-self-center" onclick="fetchGuides(${item.id}, '${item.name}')">
         Выбрать
       </button></td>
     `
+    row.classList.add('border-bottom')
     routesTable.appendChild(row)
   })
 }
