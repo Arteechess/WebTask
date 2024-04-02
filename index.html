@@ -43,6 +43,60 @@
         </div>
     </section>
 
+    <section class="mt-5">
+        <h2 class="mb-4 text-center">Причины <strong>открыть Москву</strong></h2>
+        <ul class="row px-5 list-unstyled justify-content-center mb-0">
+            <li class="col-lg-3 col-md-6 mb-4">
+                <div class="text-center mb-2"><img
+                        src="images/cards/card7.jpg"
+                        alt="Москва фото" class="img-fluid"></div>
+                Столица богата своей историей, где сливаются воедино древние традиции и современность
+            </li>
+            <li class="col-lg-3 col-md-6 mb-4">
+                <div class="text-center mb-2"><img
+                        src="images/cards/card6.jpg"
+                        alt="Москва фото" class="img-fluid"></div>
+                Разнообразная архитектура, сочетающая в себе исторические артефакты и современные здания, формирует неповторимый городской пейзаж
+            </li>
+            <li class="col-lg-3 col-md-6 mb-4">
+                <div class="text-center mb-2"><img
+                        src="images/cards/card2.jpg"
+                        alt="Москва фото" class="img-fluid"></div>
+                Широкий спектр культурных мероприятий, начиная от классических выступлений и заканчивая современными искусственными произведениями, всегда радует посетителей столицы
+            </li>
+            <li class="col-lg-3 col-md-6 mb-4">
+                <div class="text-center mb-2"><img
+                        src="images/cards/card3.jpg"
+                        alt="Москва фото" class="img-fluid"></div>
+                Московская кухня, предлагающая широкий выбор традиционных блюд и новаторские кулинарные изыски, поражает разнообразием и вкусовыми впечатлениями
+            </li>
+            <li class="col-lg-3 col-md-6 mb-4">
+                <div class="text-center mb-2"><img
+                        src="images/cards/card5.jpg"
+                        alt="Москва фото" class="img-fluid"></div>
+                Изучите Москву с опытным гидом: выбор для уникального путешествия
+            </li>
+            <li class="col-lg-3 col-md-6 mb-4">
+                <div class="text-center mb-2"><img
+                        src="images/cards/card1.jpg"
+                        alt="Москва фото" class="img-fluid"></div>
+                Погрузитесь в интерактивную историю, раскрывающую многогранность культуры столицы
+            </li>
+            <li class="col-lg-3 col-md-6 mb-4">
+                <div class="text-center mb-2"><img
+                        src="images/cards/card4.jpg"
+                        alt="Москва фото" class="img-fluid"></div>
+                Насладитесь вкусными угощениями во время экскурсии, чтобы сделать ваше путешествие еще более комфортным
+            </li>
+            <li class="col-lg-3 col-md-6 mb-4">
+                <div class="text-center mb-2"><img
+                        src="images/cards/card8.jpg"
+                        alt="Москва фото" class="img-fluid"></div>
+                Опытные гиды, интересные маршруты и вкусные угощения – создадут незабываемый опыт в Москве
+            </li>
+        </ul>
+    </section>
+
     <section class="mt-2 col-10 article-center m-sm-0 m-md-5" id="routes">
         <h2 class="mb-3 align-self-sm-center align-self-md-start text-sm-center text-md-start">Список пешеходных
             маршрутов</h2>
@@ -81,6 +135,84 @@
         </div>
 
         <table class="table table-striped" id="table-guides"></table>
+    </section>
+
+     <div class="modal text-light fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="exampleModalLabel">Оформление заявки</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                                id="close-modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h6 class="mb-3"><b>ФИО гида:</b> <span id="guide-name"></span></h6>
+                        <h6 class="mb-3"><b>Название маршрута:</b> <span id="route-modal-name"></span></h6>
+
+                        <div class="row">
+                            <div class="col-4">
+                                <label for="trip-date" class="fw-bold mb-2">Дата экскурсии</label>
+                                <input type="date" class="form-control mb-3" id="trip-date" min="2024-01-01">
+                            </div>
+
+                            <div class="col-4">
+                                <label for="trip-time" class="fw-bold mb-2">Время начала</label>
+                                <input type="time" class="form-control mb-3" id="trip-time" value="12:00:00"
+                                       min="09:00:00"
+                                       max="21:00:00" step="1800">
+                            </div>
+
+                            <div class="col-4">
+                                <label for="trip-duration" class="fw-bold mb-2">Длительность</label>
+                                <select name="trip-duration" id="trip-duration" class="form-select mb-3">
+                                    <option value="1" selected>1 час</option>
+                                    <option value="2">2 часа</option>
+                                    <option value="3">3 часа</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <label for="trip-people-count" class="fw-bold mb-2">Количество человек</label>
+                        <input type="number" class="form-control w-50" id="trip-people-count" value="1">
+
+                        <hr>
+                        <h4 class="mb-4">Дополнительные опции</h4>
+
+                        <div class="container row">
+                            <div class="form-check col-7">
+                                <input class="form-check-input" type="checkbox" value="" id="check-food">
+                                <label class="form-check-label mb-0" for="check-food">
+                                    Тематические сувениры для посетителей
+                                </label>
+                                <hr class="mb-2 mt-2">
+                                <h6><b>Стоимость:</b> <span id="foodPrice">500</span> рублей за человека</h6>
+                            </div>
+                            <div class="form-check col-5">
+                                <input class="form-check-input" type="checkbox" value="" id="check-trip">
+                                <label class="form-check-label mb-0" for="check-trip">
+                                    Быстрый выезд гида
+                                </label>
+                                <hr class="mb-2 mt-2">
+                                <h6><b>Стоимость:</b> <span id="interactiveTripPrice">x1.3</span> цена поездки</h6>
+                            </div>
+                        </div>
+
+                        <hr>
+                        <h4><b>Итоговая стоимость: </b><span id="total-modal-price"></span></h4>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                        <button type="button" class="btn btn-primary" id="order-registration"
+                                onclick="orderRegistration()">
+                            Оставить заявку
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 </main>
 

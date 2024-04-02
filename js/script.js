@@ -54,6 +54,7 @@ function fetchRoutes() {
     .then(response => response.json())
     .then(data => {
       routesData = data
+      console.log(data)
       displayItems(currentPage, data)
       createPagination(data.length)
     })
