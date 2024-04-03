@@ -16,13 +16,11 @@ let hoursNumber = 0
 let guideOrderPrice = 0
 
 checkboxFood.addEventListener('change', () => {
-  console.log(getPriceWithOption())
-  document.getElementById('total-modal-price').innerText = getPriceWithOption()
+  document.getElementById('total-modal-price').innerText = getPrice()
 })
 
 checkboxTrip.addEventListener('change', () => {
-  console.log(getPriceWithOption())
-  document.getElementById('total-modal-price').innerText = getPriceWithOption()
+  document.getElementById('total-modal-price').innerText = getPrice()
 })
 
 tripPeopleCount.addEventListener('change', () => {
@@ -36,18 +34,18 @@ tripPeopleCount.addEventListener('change', () => {
   }
 
   numberOfVisitors = Number(tripPeopleCount.value)
-  document.getElementById('total-modal-price').innerText = getPriceWithOption()
+  document.getElementById('total-modal-price').innerText = getPrice()
 })
 
 tripDate.addEventListener('change', () => {
   const date = new Date(tripDate.value)
   if (!isThisDayOff && (date.getDay() === 6 || date.getDay() === 0)) {
     isThisDayOff = true
-    document.getElementById('total-modal-price').innerText = getPriceWithOption()
+    document.getElementById('total-modal-price').innerText = getPrice()
   }
   if (isThisDayOff && date.getDay() !== 6 && date.getDay() !== 0) {
     isThisDayOff = false
-    document.getElementById('total-modal-price').innerText = getPriceWithOption()
+    document.getElementById('total-modal-price').innerText = getPrice()
   }
 })
 
@@ -59,25 +57,25 @@ tripTime.addEventListener('change', () => {
 
   if (!isItMorning && (tripTime.value >= '09:00' && tripTime.value <= '12:00')) {
     isItMorning = true
-    document.getElementById('total-modal-price').innerText = getPriceWithOption()
+    document.getElementById('total-modal-price').innerText = getPrice()
   }
   if (isItMorning && (tripTime.value < '09:00' || tripTime.value > '12:00')) {
     isItMorning = false
-    document.getElementById('total-modal-price').innerText = getPriceWithOption()
+    document.getElementById('total-modal-price').innerText = getPrice()
   }
   if (!isItEvening && (tripTime.value >= '20:00' && tripTime.value <= '23:00')) {
     isItEvening = true
-    document.getElementById('total-modal-price').innerText = getPriceWithOption()
+    document.getElementById('total-modal-price').innerText = getPrice()
   }
   if (isItEvening && (tripTime.value < '20:00' || tripTime.value > '23:00')) {
     isItEvening = false
-    document.getElementById('total-modal-price').innerText = getPriceWithOption()
+    document.getElementById('total-modal-price').innerText = getPrice()
   }
 })
 
 tripDuration.addEventListener('change', () => {
   hoursNumber = Number(tripDuration.value)
-  document.getElementById('total-modal-price').innerText = getPriceWithOption()
+  document.getElementById('total-modal-price').innerText = getPrice()
 })
 
 function orderRegistration () {
@@ -90,7 +88,7 @@ function orderRegistration () {
   formdata.append('optionFirst', String(Number(checkboxFood.checked)))
   formdata.append('optionSecond', String(Number(checkboxTrip.checked)))
   formdata.append('persons', String(tripPeopleCount.value))
-  formdata.append('price', String(Math.round(getPriceWithOption())))
+  formdata.append('price', String(Math.round(getPrice())))
   formdata.append('route_id', String(currentRoute))
   formdata.append('time', String(tripTime.value))
 
@@ -144,20 +142,18 @@ const getPrice = () => {
     price += 1500
   }
 
-  return price
-}
-
-const getPriceWithOption = () => {
-  let price = getPrice()
-
   if (checkboxTrip.checked) {
-    price *= 1.5
+    if (isThisDayOff)
+      price *= 1.25
+    else
+      price *= 1.3
   }
   if (checkboxFood.checked) {
+    if (numberOfVisitors === 0)
+      numberOfVisitors = 1
+
     price += 1000 * numberOfVisitors
   }
-
-  console.log(guideOrderPrice, getPrice(), price)
 
   return Math.round(price)
 }
