@@ -1,162 +1,119 @@
-const guideModalName = document.getElementById('guide-name')
-const routeModalName = document.getElementById('route-modal-name')
-const tripDate = document.getElementById('trip-date')
-const tripTime = document.getElementById('trip-time')
-const tripDuration = document.getElementById('trip-duration')
-const tripPeopleCount = document.getElementById('trip-people-count')
-const checkboxFood = document.getElementById('check-food')
-const checkboxTrip = document.getElementById('check-trip')
+const guideModalName = document.getElementById('guide-name');
+const routeModalName = document.getElementById('route-modal-name');
+const tripDate = document.getElementById('trip-date');
+const tripTime = document.getElementById('trip-time');
+const tripDuration = document.getElementById('trip-duration');
+const tripPeopleCount = document.getElementById('trip-people-count');
+const checkboxFood = document.getElementById('check-food');
+const checkboxTrip = document.getElementById('check-trip');
 
-let isThisDayOff = false
-let isItMorning = false
-let isItEvening = false
-let numberOfVisitors = 0
-let hoursNumber = 0
+let isThisDayOff = false;
+let isItMorning = false;
+let isItEvening = false;
+let numberOfVisitors = 0;
+let hoursNumber = 0;
+let guideOrderPrice = 0;
 
-let guideOrderPrice = 0
+checkboxFood.addEventListener('change', updatePrice);
+checkboxTrip.addEventListener('change', updatePrice);
+tripPeopleCount.addEventListener('change', handlePeopleCountChange);
+tripDate.addEventListener('change', handleDateChange);
+tripTime.addEventListener('change', handleTimeChange);
+tripDuration.addEventListener('change', handleDurationChange);
 
-checkboxFood.addEventListener('change', () => {
-    updatePrice()
-})
-
-checkboxTrip.addEventListener('change', () => {
-    updatePrice()
-})
-
-tripPeopleCount.addEventListener('change', () => {
+function handlePeopleCountChange() {
     if (tripPeopleCount.value < 1) {
-        alert('Количество людей должно быть больше 0')
-        tripPeopleCount.value = 1
+        alert('Количество людей должно быть больше 0');
+        tripPeopleCount.value = 1;
     }
     if (tripPeopleCount.value > 20) {
-        alert('Количество людей должно не превышать 20')
-        tripPeopleCount.value = 20
+        alert('Количество людей должно не превышать 20');
+        tripPeopleCount.value = 20;
     }
 
-    numberOfVisitors = Number(tripPeopleCount.value)
-    updatePrice()
-})
+    numberOfVisitors = Number(tripPeopleCount.value);
+    updatePrice();
+}
 
-tripDate.addEventListener('change', () => {
-    const date = new Date(tripDate.value)
-    if (!isThisDayOff && (date.getDay() === 6 || date.getDay() === 0)) {
-        isThisDayOff = true
-        updatePrice()
-    }
-    if (isThisDayOff && date.getDay() !== 6 && date.getDay() !== 0) {
-        isThisDayOff = false
-        updatePrice()
-    }
-})
+function handleDateChange() {
+    const date = new Date(tripDate.value);
+    const isWeekend = date.getDay() === 6 || date.getDay() === 0;
+    if (isThisDayOff !== isWeekend) {
+        isThisDayOff = isWeekend;
 
-tripTime.addEventListener('change', () => {
-    if (tripTime.value < '09:00' || tripTime.value > '23:00') {
-        alert('Время должно быть в диапазоне от 09:00 до 23:00')
-        tripTime.value = '09:00'
+        updatePrice();
     }
+}
 
-    if (!isItMorning && (tripTime.value >= '09:00' && tripTime.value <= '12:00')) {
-        isItMorning = true
-        updatePrice()
-    }
-    if (isItMorning && (tripTime.value < '09:00' || tripTime.value > '12:00')) {
-        isItMorning = false
-        updatePrice()
-    }
-    if (!isItEvening && (tripTime.value >= '20:00' && tripTime.value <= '23:00')) {
-        isItEvening = true
-        updatePrice()
-    }
-    if (isItEvening && (tripTime.value < '20:00' || tripTime.value > '23:00')) {
-        isItEvening = false
-        updatePrice()
-    }
-})
+function handleTimeChange() {
+    const time = tripTime.value;
 
-tripDuration.addEventListener('change', () => {
-    hoursNumber = Number(tripDuration.value)
-    updatePrice()
-})
+    isItMorning = time >= '09:00' && time <= '12:00';
+    isItEvening = time >= '20:00' && time <= '23:00';
+
+    updatePrice();
+}
+
+function handleDurationChange() {
+    hoursNumber = Number(tripDuration.value);
+
+    updatePrice();
+}
 
 function orderRegistration() {
-    const url = 'http://exam-2023-1-api.std-900.ist.mospolytech.ru/api/orders?api_key=' + API_KEY
+    const url = 'http://exam-2023-1-api.std-900.ist.mospolytech.ru/api/orders?api_key=' + API_KEY;
 
-    const formdata = new FormData()
-    formdata.append('date', String(tripDate.value))
-    formdata.append('duration', String(tripDuration.value))
-    formdata.append('guide_id', String(currentGuide))
-    formdata.append('optionFirst', String(Number(checkboxFood.checked)))
-    formdata.append('optionSecond', String(Number(checkboxTrip.checked)))
-    formdata.append('persons', String(tripPeopleCount.value))
-    formdata.append('price', String(Math.round(getPrice())))
-    formdata.append('route_id', String(currentRoute))
-    formdata.append('time', String(tripTime.value))
+    const formData = new FormData();
+    formData.append('date', tripDate.value);
+    formData.append('duration', tripDuration.value);
+    formData.append('guide_id', currentGuide);
+    formData.append('optionFirst', Number(checkboxFood.checked));
+    formData.append('optionSecond', Number(checkboxTrip.checked));
+    formData.append('persons', tripPeopleCount.value);
+    formData.append('price', Math.round(getPrice()));
+    formData.append('route_id', currentRoute);
+    formData.append('time', tripTime.value);
 
-    formdata.forEach((value, key) => {
-        console.log(key + ' ' + value)
-    })
+    formData.forEach((value, key) => {
+        console.log(key + ' ' + value);
+    });
 
     const requestOptions = {
         method: 'POST',
-        body: formdata,
+        body: formData,
         redirect: 'follow'
-    }
+    };
 
     fetch(url, requestOptions)
         .then(response => {
             if (!response.ok) {
-                throw new Error('Произошла ошибка' + response.status)
+                throw new Error('Произошла ошибка' + response.status);
             }
-            return response.json()
+            return response.json();
         })
         .then(data => {
-            console.log(data)
-            document.getElementById('close-modal').click()
+            console.log(data);
+            document.getElementById('close-modal').click();
         })
         .catch(error => {
-            console.log(error)
-        })
+            console.log(error);
+        });
 }
 
-const getPrice = () => {
-    let price = guideOrderPrice
+function getPrice() {
+    let price = guideOrderPrice * hoursNumber;
 
-    if (hoursNumber !== 0) {
-        price *= hoursNumber
-    }
-    if (isThisDayOff) {
-        price *= 1.5
-    }
-    if (isItMorning) {
-        price += 400
-    }
-    if (isItEvening) {
-        price += 1000
-    }
+    if (isThisDayOff) price *= 1.5;
+    if (isItMorning) price += 400;
+    if (isItEvening) price += 1000;
+    if (numberOfVisitors >= 5 && numberOfVisitors < 10) price += 1000;
+    if (numberOfVisitors >= 10) price += 1500;
+    if (checkboxTrip.checked) price *= isThisDayOff ? 1.25 : 1.3;
+    if (checkboxFood.checked) price += 1000 * (numberOfVisitors || 1);
 
-    if (numberOfVisitors >= 5 && numberOfVisitors < 10) {
-        price += 1000
-    }
-    if (numberOfVisitors >= 10) {
-        price += 1500
-    }
-
-    if (checkboxTrip.checked) {
-        if (isThisDayOff)
-            price *= 1.25
-        else
-            price *= 1.3
-    }
-    if (checkboxFood.checked) {
-        if (numberOfVisitors === 0)
-            numberOfVisitors = 1
-
-        price += 1000 * numberOfVisitors
-    }
-
-    return Math.round(price)
+    return Math.round(price);
 }
 
 function updatePrice() {
-    document.getElementById('total-modal-price').innerText = getPrice()
+    document.getElementById('total-modal-price').innerText = getPrice();
 }
