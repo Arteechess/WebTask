@@ -16,11 +16,6 @@ let targetName = '';
 let map = null;
 let directions = null;
 
-// window.onload = () => {
-//     console.log(22)
-//     getGeolocation();
-// }
-
 const getGeolocation = () => {
     if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(function (position) {

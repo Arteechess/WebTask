@@ -114,7 +114,9 @@ function updateOrderRequest() {
 }
 
 const getUpdatedPrice = () => {
-    let price = guidePrice * hoursNumber;
+    let price = guidePrice;
+    if (hoursNumber !== 0)
+        price *= hoursNumber
 
     if (isThisDayOff) price *= 1.5;
     if (isItMorning) price += 400;
