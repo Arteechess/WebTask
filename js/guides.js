@@ -112,12 +112,12 @@ function setExperienceTable() {
   const selectedLang = langSelect.value;
 
   guides.innerHTML = `
-    <tr class="table-primary">
-      <td class="fw-bold">ФИО</td>
-      <td class="fw-bold">Языки</td>
-      <td class="fw-bold">Опыт работы</td>
-      <td class="fw-bold">Стоимость услуг в час</td>
-      <td></td>
+    <tr class="text-center">
+      <td class="fw-bold" style="background: #a0d0b1;">ФИО</td>
+      <td class="fw-bold" style="background: #a0d0b1;">Языки</td>
+      <td class="fw-bold" style="background: #a0d0b1;">Опыт работы</td>
+      <td class="fw-bold" style="background: #a0d0b1;">Стоимость услуг в час</td>
+      <td style="background: #a0d0b1;"></td>
     </tr>
     `;
 
@@ -141,11 +141,11 @@ function setExperienceTable() {
   filteredGuidesExperiences.forEach(item => {
     guides.innerHTML += `
       <tr>
-        <td>${item.name}</td>
-        <td>${item.language}</td>
-        <td>${item.workExperience} ${getYearString(item.workExperience)}</td>
-        <td>${item.pricePerHour}/час</td>
-        <td><button class="btn btn-primary align-self-center" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setModalData(${item.id}, '${item.name}', '${item.language}', ${item.workExperience}, ${item.pricePerHour}, ${item.route_id})">Выбрать</button></td>
+        <td style="background: mintcream;">${item.name}</td>
+        <td style="background: mintcream;">${item.language}</td>
+        <td style="background: mintcream;">${item.workExperience} ${getYearString(item.workExperience)}</td>
+        <td style="background: mintcream;">${item.pricePerHour}/час</td>
+        <td style="background: mintcream;"><button class="btn btn-primary align-self-center" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setModalData(${item.id}, '${item.name}', '${item.language}', ${item.workExperience}, ${item.pricePerHour}, ${item.route_id})">Выбрать</button></td>
       </tr>
     `;
   });

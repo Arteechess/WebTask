@@ -16,26 +16,25 @@ function displayItems(page, data) {
   const paginatedData = data.slice(startIndex, endIndex)
 
   routesTable.innerHTML = `
-    <tr class="table-primary text-center">
-      <td class="fw-bold">Название</td>
-      <td class="fw-bold">Описание</td>
-      <td class="fw-bold">Основные объекты</td>
-      <td></td>
+    <tr class="text-center">
+      <td class="fw-bold" style="background: #a0d0b1;">Название</td>
+      <td class="fw-bold" style="background: #a0d0b1;">Описание</td>
+      <td class="fw-bold" style="background: #a0d0b1;">Основные объекты</td>
+      <td style="background: #a0d0b1;"></td>
     </tr>
     `
 
   paginatedData.forEach(item => {
-    const row = document.createElement('tr')
-    row.innerHTML = `
-      <td class="p-2 align-top">${item.name}</td>
-      <td class="p-2 align-top">${item.description}</td>
-      <td class="p-2 align-top">${item.mainObject}</td>
-      <td class="pt-2 pe-2 align-top"><button class="btn btn-primary align-self-center" onclick="fetchGuides(${item.id}, '${item.name}')">
-        Выбрать
-      </button></td>
+    routesTable.innerHTML += `
+      <tr>
+        <td style="background: mintcream;">${item.name}</td>
+        <td style="background: mintcream;">${item.description}</td>
+        <td style="background: mintcream;">${item.mainObject}</td>
+        <td style="background: mintcream;"><button class="btn btn-primary align-self-center" onclick="fetchGuides(${item.id}, '${item.name}')">
+          Выбрать
+        </button></td>
+      </tr>
     `
-    row.classList.add('border-bottom')
-    routesTable.appendChild(row)
   })
 }
 
