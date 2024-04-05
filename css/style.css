@@ -11,7 +11,7 @@ a {
 }
 
 .main-img {
-    height: 400px;
+    /*height: 400px;*/
 }
 
 td {
@@ -86,4 +86,8 @@ h2, h4 {
 
 .page-item .page-link {
     color: tomato;
+}
+
+#img-logo {
+    height: 70px;
 }

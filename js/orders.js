@@ -110,12 +110,12 @@ function displayOrders (data) {
 
   if (paginatedData.length === 0) {
     ordersTable.innerHTML = `
-    <tr class="table-primary">
-      <td class="fw-bold">№</td>
-      <td class="fw-bold">Название маршрута</td>
-      <td class="fw-bold">Дата</td>
-      <td class="fw-bold">Стоимость</td>
-      <td class="fw-bold"></td>
+    <tr class="">
+      <td class="fw-bold" style="background: #a0d0b1;">№</td>
+      <td class="fw-bold" style="background: #a0d0b1;">Название маршрута</td>
+      <td class="fw-bold" style="background: #a0d0b1;">Дата</td>
+      <td class="fw-bold" style="background: #a0d0b1;">Стоимость</td>
+      <td class="fw-bold" style="background: #a0d0b1;">Действия</td>
     </tr>
     `
     ordersTable.innerHTML += `
@@ -127,12 +127,12 @@ function displayOrders (data) {
   }
 
   ordersTable.innerHTML = `
-    <tr class="table-primary">
-      <td class="fw-bold">№</td>
-      <td class="fw-bold">Название маршрута</td>
-      <td class="fw-bold">Дата</td>
-      <td class="fw-bold">Стоимость</td>
-      <td class="fw-bold"></td>
+    <tr class="">
+      <td class="fw-bold" style="background: #a0d0b1;">№</td>
+      <td class="fw-bold" style="background: #a0d0b1;">Название маршрута</td>
+      <td class="fw-bold" style="background: #a0d0b1;">Дата</td>
+      <td class="fw-bold" style="background: #a0d0b1;">Стоимость</td>
+      <td class="fw-bold" style="background: #a0d0b1;">Действия</td>
     </tr>
     `
 
@@ -156,19 +156,19 @@ function displayOrders (data) {
       paginatedData.forEach(item => {
         ordersTable.innerHTML += `
           <tr>
-            <td>${item.id}</td>
-            <td>${routeNames[item.route_id]}</td>
-            <td>${item.date}</td>
-            <td>${item.price}</td>
-            <td>
+            <td style="background: mintcream;">${item.id}</td>
+            <td style="background: mintcream;">${routeNames[item.route_id]}</td>
+            <td style="background: mintcream;">${item.date}</td>
+            <td style="background: mintcream;">${item.price}</td>
+            <td style="background: mintcream;">
             <button class="border-0 bg-transparent align-self-center" data-bs-toggle="modal" data-bs-target="#info-order-modal" onclick="infoOrder(${item.id}, ${item.route_id}, '${routeNames[item.route_id]}')">
-                <img src="../../img/icons/show.png" alt="Информация" class="img-order">
+                <img src="../images/icons/icons8-eye-30.png" alt="Информация" class="img-order">
             </button>
             <button class="border-0 bg-transparent align-self-center" data-bs-toggle="modal" data-bs-target="#update-order-modal" onclick="updateOrder(${item.id}, ${item.route_id}, '${routeNames[item.route_id]}')">
-                <img src="../../img/icons/pen.png" alt="Редактировать" class="img-order">
+                <img src="../images/icons/icons8-pencil-50.png" width="30" alt="Редактировать" class="img-order">
             </button>
             <button class="border-0 bg-transparent align-self-center" data-bs-toggle="modal" data-bs-target="#delete-order-modal" onclick="currentOrderId = ${item.id};">
-                <img src="../../img/icons/bin.png" alt="Удалить" class="img-order">
+                <img src="../images/icons/icons8-bin-30.png" alt="Удалить" class="img-order">
             </button>
             </td>
           </tr>
